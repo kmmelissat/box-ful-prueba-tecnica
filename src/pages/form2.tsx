@@ -214,7 +214,6 @@ export default function FormStep2() {
                       alt="Caja"
                       width={24}
                       height={24}
-                      style={{ filter: 'grayscale(100%) opacity(0.6)' }}
                     />
                   </div>
                 </Col>

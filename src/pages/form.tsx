@@ -100,7 +100,6 @@ export default function FormPage() {
                   addonBefore={
                     <Select defaultValue="+503" style={{ width: 90 }}>
                       <Option value="+503">🇸🇻 +503</Option>
-                      <Option value="+502">🇬🇹 +502</Option>
                     </Select>
                   }
                   type="tel"
