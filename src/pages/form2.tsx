@@ -22,6 +22,7 @@ import PageLayout from '@/components/PageLayout';
 import FormContainer from '@/components/FormContainer';
 import { useFormStore } from '@/store/useFormStore';
 import Image from 'next/image';
+import dayjs from 'dayjs';
 
 const { Title } = Typography;
 
@@ -62,15 +63,60 @@ export default function FormStep2() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (paquetes.length === 0) {
       message.warning('Agrega al menos un paquete');
       return;
     }
+  
     setFormData({ paquetes });
-    console.log('Datos completos para enviar:', { ...data, paquetes });
-    message.success('Orden enviada con éxito');
+
+    let telefono = data.telefono;
+
+    if (!telefono?.startsWith('+503')) {
+      telefono = '+503' + telefono;
+    }
+    
+  
+    const payload = {
+      pickupAddress: data.direccionRecoleccion,
+      scheduledDate: dayjs(data.fechaProgramada).toISOString(),
+      firstName: data.nombres,
+      lastName: data.apellidos,
+      email: data.correo,
+      phone: telefono,
+      deliveryAddress: data.direccionDestino,
+      department: data.departamento,
+      municipality: data.municipio,
+      referencePoint: data.referencia,
+      instructions: data.indicaciones || '',
+      packages: paquetes.map((p) => ({
+        content: p.contenido,
+        weight: p.peso,
+        length: p.largo,
+        height: p.alto,
+        width: p.ancho,
+      })),
+    };
+    
+  
+    try {
+      const response = await fetch('http://localhost:3010/shipments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    
+      const resData = await response.json(); // 👈 intentamos leer el mensaje de error
+      if (!response.ok) throw new Error(resData.message || 'Error desconocido');
+    
+      message.success('✅ Tu orden fue enviada con éxito 🚚');
+    } catch (err) {
+      console.error(err);
+      message.error(`❌ ${err.message}`);
+    }
   };
+  
 
   return (
     <PageLayout>

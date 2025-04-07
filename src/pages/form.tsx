@@ -5,6 +5,7 @@ import FormContainer from '@/components/FormContainer';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
+import { useFormStore } from '@/store/useFormStore'; 
 
 const { Option } = Select;
 
@@ -18,10 +19,19 @@ export default function FormPage() {
   const [selectedDepto, setSelectedDepto] = useState<string>();
   const router = useRouter();
 
+  const { setFormData } = useFormStore();
+
   const onFinish = (values: any) => {
     console.log('Datos paso 1:', values);
+  
+    setFormData({
+      ...values,
+      telefono: '+503' + values.telefono, 
+    });
+  
     router.push('/form2');
   };
+  
 
   return (
     <PageLayout>
