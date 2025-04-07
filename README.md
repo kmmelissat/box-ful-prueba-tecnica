@@ -1,40 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 📦 Boxful - Prueba Técnica (Frontend)
 
-## Getting Started
+Este proyecto es el **frontend** de la prueba técnica para Boxful. Desarrollado con **Next.js** y **Ant Design**, implementa un formulario dividido en dos pasos, con validaciones y visualización dinámica de datos.
 
-First, run the development server:
+---
+
+## 🖼️ Vistas implementadas
+
+### ✅ Paso 1: Formulario de datos personales
+- Dirección
+- Fecha
+- Nombre
+- Correo electrónico
+- Teléfono
+- Departamento y municipio (selects dinámicos)
+
+### ✅ Paso 2: Listado de paquetes
+- Entrada dinámica de bultos con:
+  - Largo, alto, ancho
+  - Peso
+  - Contenido (editable)
+- Los paquetes se muestran debajo con opción de editar/eliminar.
+- Al finalizar, se envían todos los datos a una **API NestJS**.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Ant Design](https://ant.design/)
+- [Zustand](https://github.com/pmndrs/zustand) (manejo de estado entre pasos)
+- [React Hook Form] + `Form` de AntD (para validación por paso)
+- `fetch` para conexión a la API (en desarrollo)
+
+---
+
+## 📦 Instalación
 
 ```bash
+git clone https://github.com/kmmelissat/box-ful-prueba-tecnica
+cd box-ful-prueba-tecnica
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
