@@ -124,7 +124,7 @@ if (!isLoggedIn) return null;
         body: JSON.stringify(payload),
       });
     
-      const resData = await response.json(); // 👈 intentamos leer el mensaje de error
+      const resData = await response.json(); 
       if (!response.ok) throw new Error(resData.message || 'Error desconocido');
     
       message.success('✅ Tu orden fue enviada con éxito 🚚');
