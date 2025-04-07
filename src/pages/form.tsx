@@ -1,11 +1,14 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useAuthStore } from '@/store/useAuthStore'; // 👈 protección de sesión
+
 import { Form, Input, Button, DatePicker, Row, Col, Select } from 'antd';
 import { EnvironmentOutlined, CalendarOutlined } from '@ant-design/icons';
 import PageLayout from '@/components/PageLayout';
 import FormContainer from '@/components/FormContainer';
-import { useState } from 'react';
-import dayjs from 'dayjs';
-import { useRouter } from 'next/router';
 import { useFormStore } from '@/store/useFormStore'; 
+import dayjs from 'dayjs';
+
 
 const { Option } = Select;
 
@@ -15,10 +18,19 @@ const departamentos: Record<string, string[]> = {
 };
 
 export default function FormPage() {
-  const [form] = Form.useForm();
-  const [selectedDepto, setSelectedDepto] = useState<string>();
+  const { isLoggedIn } = useAuthStore(); // 👈 auth check
   const router = useRouter();
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/login');
+    }
+  }, [isLoggedIn]);
+
+  if (!isLoggedIn) return null;
+
+  const [form] = Form.useForm();
+  const [selectedDepto, setSelectedDepto] = useState<string>();
   const { setFormData } = useFormStore();
 
   const onFinish = (values: any) => {
@@ -26,12 +38,11 @@ export default function FormPage() {
   
     setFormData({
       ...values,
-      telefono: '+503' + values.telefono, 
+      telefono: '+503' + values.telefono,
     });
   
     router.push('/form2');
   };
-  
 
   return (
     <PageLayout>

@@ -23,6 +23,8 @@ import FormContainer from '@/components/FormContainer';
 import { useFormStore } from '@/store/useFormStore';
 import Image from 'next/image';
 import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const { Title } = Typography;
 
@@ -35,9 +37,21 @@ interface Paquete {
 }
 
 export default function FormStep2() {
+
+  const { isLoggedIn } = useAuthStore();
+const router = useRouter();
+
+useEffect(() => {
+  if (!isLoggedIn) {
+    router.push('/login');
+  }
+}, [isLoggedIn]);
+
+if (!isLoggedIn) return null;
+
+
   const [form] = Form.useForm();
   const [paquetes, setPaquetes] = useState<Paquete[]>([]);
-  const router = useRouter();
   const { data, setFormData } = useFormStore();
 
   const agregarPaquete = (values: Paquete) => {
@@ -101,9 +115,12 @@ export default function FormStep2() {
     
   
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:3010/shipments', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, 
+         },
         body: JSON.stringify(payload),
       });
     
